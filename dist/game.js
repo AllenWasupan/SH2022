@@ -2934,103 +2934,73 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     }
   });
 
-  // code/props.js
-  var props_exports = {};
-  __export(props_exports, {
-    loadHouse: () => loadHouse,
-    loadSign: () => loadSign,
-    loadTree: () => loadTree
-  });
-  function loadTree(x, y) {
-    loadSprite("tree", "sprites/tree.png");
-    add([
-      sprite("tree"),
-      pos(x, y),
-      color(180, 180, 180)
-    ]);
-  }
-  function loadSign(x, y) {
-    loadSprite("sign", "sprites/sign.png");
-    add([
-      sprite("sign"),
-      pos(x, y),
-      color(165, 165, 165),
-      scale(1.5, 1.5)
-    ]);
-  }
-  function loadHouse() {
-    loadSprite("house", "sprites/house.png");
-    const house = add([
-      sprite("house"),
-      pos(50, 270),
-      color(120, 120, 120)
-    ]);
-    house.flipX(true);
-  }
-  var init_props = __esm({
-    "code/props.js"() {
-      init_kaboom();
-      __name(loadTree, "loadTree");
-      __name(loadSign, "loadSign");
-      __name(loadHouse, "loadHouse");
-    }
-  });
-
-  // code/dialogue.js
+  // code/forest/dialogue.js
   var dialogue_exports = {};
   __export(dialogue_exports, {
     loadDialogue: () => loadDialogue
   });
-  function loadDialogue() {
-    let curDialog = 0;
+  function loadDialogue(knight) {
     const dialogs = [
-      ["My guttural tendencies are getting mamani'd."],
-      ["As if..."],
-      [""],
-      [""],
-      [""],
-      [""],
-      [""],
-      [""]
+      ["knight", "My guttual tendencies are getting attacked."],
+      ["knight", "As if..."],
+      ["knight", "Argh! My rampallian!"],
+      ["knight", "You would be best served well."],
+      ["knight", "The King awaits a platter of roast suckling pig."],
+      ["knight", "As if..."],
+      ["knight", "GET OUT OF MY FOREST!"],
+      ["knight", "As if..."]
     ];
+    let curDialog = 0;
     const textbox = add([
-      rect(width() - 500, 20, { radius: 16 }),
+      rect(width() - 200, 120, { radius: 32 }),
       origin("center"),
       pos(center().x, height() - 100),
       outline(2)
     ]);
     const txt = add([
-      text("", { size: 16, width: width() - 230 }),
+      text("", { size: 32, width: width() - 230 }),
       pos(textbox.pos),
       origin("center")
     ]);
+    const avatar = add([
+      sprite("knight", {
+        frame: 2
+      }),
+      scale(3),
+      origin("center"),
+      pos(center().sub(0, 50))
+    ]);
     onKeyPress("space", () => {
       curDialog = (curDialog + 1) % dialogs.length;
-      updateDialog();
+      updateDialogue();
     });
-    function updateDialog() {
+    function updateDialogue() {
       const [char, dialog] = dialogs[curDialog];
+      avatar.use(sprite(char));
       txt.text = dialog;
     }
-    __name(updateDialog, "updateDialog");
-    updateDialog();
+    __name(updateDialogue, "updateDialogue");
+    updateDialogue();
   }
   var init_dialogue = __esm({
-    "code/dialogue.js"() {
+    "code/forest/dialogue.js"() {
       init_kaboom();
       __name(loadDialogue, "loadDialogue");
     }
   });
 
-  // code/forest.js
-  var forest_exports = {};
-  __export(forest_exports, {
-    forestEvent: () => forestEvent
+  // code/forest/assets.js
+  var assets_exports = {};
+  __export(assets_exports, {
+    loadHouse: () => loadHouse,
+    loadScene: () => loadScene,
+    loadSign: () => loadSign,
+    loadTree: () => loadTree
   });
-  function forestEvent() {
+  function loadScene() {
     addLevel([
-      "                                             ",
-      "============================================="
+      "                                                 ",
+      "================================================="
     ], {
       width: 16,
       height: 16,
@@ -3057,10 +3027,51 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       sliceX: 20,
       sliceY: 20
     });
-    loadTree2(180, 220);
-    loadHouse2();
-    loadSign2(800, 345);
-    loadSprite("knight", "/sprites/knightv1.png", {
+  }
+  function loadTree(x, y) {
+    loadSprite("tree", "sprites/tree.png");
+    add([
+      sprite("tree"),
+      pos(x, y),
+      color(180, 180, 180)
+    ]);
+  }
+  function loadSign(x, y) {
+    loadSprite("sign", "sprites/sign.png");
+    add([
+      sprite("sign"),
+      pos(x, y),
+      color(165, 165, 165),
+      scale(1.5, 1.5)
+    ]);
+  }
+  function loadHouse() {
+    loadSprite("house", "sprites/house.png");
+    const house = add([
+      sprite("house"),
+      pos(50, 270),
+      color(120, 120, 120)
+    ]);
+    house.flipX(true);
+  }
+  var init_assets = __esm({
+    "code/forest/assets.js"() {
+      init_kaboom();
+      __name(loadScene, "loadScene");
+      __name(loadTree, "loadTree");
+      __name(loadSign, "loadSign");
+      __name(loadHouse, "loadHouse");
+    }
+  });
+
+  // code/forest/characters.js
+  var characters_exports = {};
+  __export(characters_exports, {
+    loadPlayer: () => loadPlayer,
+    loadWizard: () => loadWizard
+  });
+  function loadPlayer() {
+    loadSprite("knight", "/sprites/knight/knight.png", {
       "x": 0,
       "y": 0,
       "width": 144,
@@ -3081,9 +3092,9 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         }
       }
     });
-    const player = add([
+    const player2 = add([
       sprite("knight"),
-      pos(80, 100),
+      pos(80, 350),
       origin("center"),
       area(),
       body(),
@@ -3091,15 +3102,84 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       solid(),
       color(215, 215, 215)
     ]);
-    player.play("idle");
-    loadDialogue2();
+    player2.play("idle");
+    return player2;
   }
-  var loadTree2, loadHouse2, loadSign2, loadDialogue2;
-  var init_forest = __esm({
-    "code/forest.js"() {
+  function loadWizard() {
+    loadSprite("wizard", "/sprites/wizard.png", {
+      "x": 0,
+      "y": 0,
+      "width": 144,
+      "height": 28,
+      "sliceX": 8,
+      anims: {
+        "idle": {
+          from: 0,
+          to: 3,
+          speed: 5,
+          loop: true
+        },
+        "run": {
+          from: 4,
+          to: 7,
+          speed: 10,
+          loop: true
+        }
+      }
+    });
+    const wizard = add([
+      sprite("wizard"),
+      pos(650, 350),
+      origin("center"),
+      area(),
+      body(),
+      scale(1.25, 1.25),
+      solid(),
+      color(215, 215, 215)
+    ]);
+    wizard.flipX(true);
+    wizard.play("idle");
+  }
+  var init_characters = __esm({
+    "code/forest/characters.js"() {
       init_kaboom();
-      ({ loadTree: loadTree2, loadHouse: loadHouse2, loadSign: loadSign2 } = (init_props(), __toCommonJS(props_exports)));
+      __name(loadPlayer, "loadPlayer");
+      __name(loadWizard, "loadWizard");
+    }
+  });
+
+  // code/forest/forest.js
+  var forest_exports = {};
+  __export(forest_exports, {
+    forestEvent: () => forestEvent
+  });
+  function forestEvent() {
+    loadScene2();
+    loadTree2(180, 220);
+    loadHouse2();
+    loadSign2(800, 345);
+    player = loadPlayer2();
+    loadDialogue2(player);
+    finishedDialogue = false;
+    count = 0;
+    SPEED = 80;
+    onUpdate(() => {
+      if (finishedDialogue) {
+        count++;
+        loadWizard2();
+      }
+      if (count < 500 && finishedDialogue) {
+        player.move(SPEED, 0);
+      }
+    });
+  }
+  var loadDialogue2, loadTree2, loadHouse2, loadSign2, loadScene2, loadPlayer2, loadWizard2;
+  var init_forest = __esm({
+    "code/forest/forest.js"() {
+      init_kaboom();
       ({ loadDialogue: loadDialogue2 } = (init_dialogue(), __toCommonJS(dialogue_exports)));
+      ({ loadTree: loadTree2, loadHouse: loadHouse2, loadSign: loadSign2, loadScene: loadScene2 } = (init_assets(), __toCommonJS(assets_exports)));
+      ({ loadPlayer: loadPlayer2, loadWizard: loadWizard2 } = (init_characters(), __toCommonJS(characters_exports)));
       __name(forestEvent, "forestEvent");
     }
   });
@@ -3107,11 +3187,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   // code/main.js
   init_kaboom();
   var { forestEvent: forestEvent2 } = (init_forest(), __toCommonJS(forest_exports));
-  to({
-    width: 1280,
-    height: 720,
-    background: [0, 0, 0]
-  });
+  to();
   forestEvent2();
 })();
 //# sourceMappingURL=game.js.map
