@@ -6,6 +6,7 @@
 		"express": "^4.17.1",
 		"kaboom": "^2000.2.3",
 		"stacktrace-js": "^2.0.2",
+		"tilemap-editor": "^0.7.8",
 		"ws": "^8.2.0"
 	}
 }
