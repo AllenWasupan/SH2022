@@ -1,43 +1,89 @@
 import kaboom from "kaboom"
 const {loadDialogue, loadSynopsis, addButton} = require("./dialogue.js")
-const {loadTree, loadHouse, loadSign, loadScene} = require("./assets.js")
+const {loadTree, loadHouse, loadSign, loadBackground} = require("./assets.js")
 const {loadPlayer, loadWizard} = require("./characters.js")
 
-function forestEvent(){
+const {test} = require("../main.js")
 
-	loadScene()
-	loadTree(180, 220)
-	loadHouse()
-	loadSign(800, 345)
+function forestEvent(){
+	background = loadBackground()
+	//ground = loadGround()
+	tree = loadTree(180, 220)
+	house = loadHouse()
+	sign = loadSign(800, 345)
 	player = loadPlayer()
   wizard = loadWizard()
   wizard.opacity = 0
 // -------------------------------------------------------
+  loadSprite("knightImg", "/sprites/knight/knightImg.png")
+	loadSprite("wizardImg", "/sprites/wizard/wizardImg.png")
 
-	loadSynopsis()
+  var end = false
+  var contEnd = false
 
-
-  count = 0
-  SPEED = 60
-  onUpdate(() => {
-    if (true && true) {
-      count++
-    }
+	loadSynopsis();
+  onClick("Continue...", () => {
+  
+    player.onStateUpdate("move", () => {
+      player.moveTo(650,350,70)
+    })
     
-    if (count < 200) {
-      player.move(SPEED, 0)
-      
-    }
-    else if (count < 500) {
-      wizard.opacity += .01
-    }
-    else if (count == 2000) {
-      destroyAll()
-    }
-    
+    wait(8, () => player.enterState("idle"))
+    wait(7.5, () => wizard.opacity = 100)
+    wait(8, () => loadDialogue())
+  
+    //player.move(500,0)
   })
 
 
+  on("death", "textbox", ()=> {
+    destroy(tree)
+    destroy(house)
+    destroy(sign)
+    destroy(player)
+    destroy(wizard)
+    destroy(background)
+  
+    wait(1, ()=> test())
+  })
+
+    
+  
+ 
+
+  if (end) {
+    destroy(background)
+    destroy(tree)
+    destroy(house)
+    destroy(sign)
+    destroy(player)
+    destroy(wizard)
+    destroy(background)
+  }
+
+
+  // count = 0
+  // SPEED = 60
+
+  
+  // onUpdate(() => {
+  //   if (true && true) {
+  //     count++
+  //   }
+    
+  //   if (count < 200) {
+  //     player.move(SPEED, 0)
+  //   }
+  //   else if (count < 500) {
+  //     wizard.opacity += .05
+  //   }
+  //   else if (count >= 2000) {
+  //     
+  //     return complete
+  //   }
+    
+  // })
+  
 	
 
 }

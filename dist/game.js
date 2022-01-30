@@ -25,6 +25,26 @@
       return cache && cache.get(module) || (temp = __reExport(__markAsModule({}), module, 1), cache && cache.set(module, temp), temp);
     };
   })(typeof WeakMap !== "undefined" ? /* @__PURE__ */ new WeakMap() : 0);
+  var __async = (__this, __arguments, generator) => {
+    return new Promise((resolve, reject) => {
+      var fulfilled = (value) => {
+        try {
+          step(generator.next(value));
+        } catch (e) {
+          reject(e);
+        }
+      };
+      var rejected = (value) => {
+        try {
+          step(generator.throw(value));
+        } catch (e) {
+          reject(e);
+        }
+      };
+      var step = (x) => x.done ? resolve(x.value) : Promise.resolve(x.value).then(fulfilled, rejected);
+      step((generator = generator.apply(__this, __arguments)).next());
+    });
+  };
 
   // node_modules/kaboom/dist/kaboom.mjs
   function jt(i, t) {
@@ -326,7 +346,7 @@
   function Gr() {
     return new AudioBuffer({ length: 1, numberOfChannels: 1, sampleRate: 44100 });
   }
-  var rr, Ki, Hi, ir, zi, Ji, Nt, P, D, a, b, sr, or, $, cr, lr, T, B, L, Fe, ce, de, v, dr, k, R, Qi, Zi, pr, be, Kt, he, _e, yt, Be, fe, Tr, Sr, Cr, Rr, Wr, Mr, Lr, qr, Pr, Dr, cs, Ar, ls, Or, Ir, hs, ds, fs, ps, Ne, Vr, bt, Fr, ms, rn, je, ws, gs, sn, on, Us, ys, to;
+  var rr, Ki, Hi, ir, zi, Ji, Nt, P, D, a, b, sr, or, $, cr, lr, T, B, L, Fe, ce, de, v, dr, k, R, Qi, Zi, pr, be, Kt, he, _e, yt, Be, fe, Tr, Sr, Cr, Rr, Wr, Mr, Lr, qr, Pr, Dr, cs, Ar, ls, Or, Ir, hs, ds, fs, ps, Ne, Vr, bt, Fr, ms, rn, je, ws, gs, sn, on2, Us, ys, to;
   var init_kaboom = __esm({
     "node_modules/kaboom/dist/kaboom.mjs"() {
       rr = Object.defineProperty;
@@ -854,7 +874,7 @@ vec4 vert(vec3 pos, vec2 uv, vec4 color) {
 	return def_vert();
 }
 `;
-      on = `
+      on2 = `
 vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
 	return def_frag();
 }
@@ -889,7 +909,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           return { canvas: n, scale: r, gl: u, keyStates: {}, mouseStates: {}, charInputted: [], isMouseMoved: false, isKeyPressed: false, isKeyPressedRepeat: false, isKeyReleased: false, mousePos: f(0, 0), mouseDeltaPos: f(0, 0), time: 0, realTime: 0, skipTime: false, dt: 0, numFrames: 0, isTouch: "ontouchstart" in window || navigator.maxTouchPoints > 0, loopID: null, stopped: false, paused: false, fpsCounter: new Be(), loaded: false };
         })(), l = (() => {
           var d;
-          let e = t.gl, n = cn(sn, on), r = Ke(new ImageData(new Uint8ClampedArray([255, 255, 255, 255]), 1, 1)), c = (d = i.background) != null ? d : E(0, 0, 0);
+          let e = t.gl, n = cn(sn, on2), r = Ke(new ImageData(new Uint8ClampedArray([255, 255, 255, 255]), 1, 1)), c = (d = i.background) != null ? d : E(0, 0, 0);
           if (i.background) {
             let h = v.fromArray(i.background);
             e.clearColor(h.r / 255, h.g / 255, h.b / 255, 1);
@@ -1196,8 +1216,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         }
         __name(Ke, "Ke");
         a(Ke, "makeTex");
-        function cn(e = sn, n = on) {
-          let r = t.gl, c, u = ws.replace("{{user}}", e != null ? e : sn), s = gs.replace("{{user}}", n != null ? n : on), o = r.createShader(r.VERTEX_SHADER), d = r.createShader(r.FRAGMENT_SHADER);
+        function cn(e = sn, n = on2) {
+          let r = t.gl, c, u = ws.replace("{{user}}", e != null ? e : sn), s = gs.replace("{{user}}", n != null ? n : on2), o = r.createShader(r.VERTEX_SHADER), d = r.createShader(r.FRAGMENT_SHADER);
           if (r.shaderSource(o, u), r.shaderSource(d, s), r.compileShader(o), r.compileShader(d), c = r.getShaderInfoLog(o))
             throw new Error(c);
           if (c = r.getShaderInfoLog(d))
@@ -2973,29 +2993,29 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     loadSynopsis: () => loadSynopsis
   });
   function loadDialogue() {
-    loadSprite("knightImg", "/sprites/knight/knightImg.png");
-    loadSprite("wizardImg", "/sprites/wizard/wizardImg.png");
     const dialogs = [
-      ["wizardImg", "Greetings knight. Thou must cometh from afar."],
+      ["wizardImg", "Greetings knight. Thou must cometh to slay the dragon."],
       ["knightImg", "Greetings Wizard. It is as thou sayeth."],
-      ["knightImg", "I have cometh from the lands of Gregarious."],
-      ["knightImg", "I seek to slay the tormenter of these lands..."],
-      ["knightImg", "The Dragon Lord of Communism Marxist!"],
-      ["wizardImg", "Countless others have attemtped to slay that vile dragon..."],
-      ["wizardImg", "Yet none has suceeded."],
-      ["wizardImg", "I shall not allow thoust to challenge the dragon without a test."],
-      ["knightImg", "As if..."],
-      ["wizardImg", "Ahead lays a dungeon riddled with monsters."],
-      ["wizardImg", "Only once thou clear the dungeon, can thou pass."],
-      ["knightImg", "As if..."],
-      ["wizardImg", "I shall wait for you on the other side"]
+      ["knightImg", "I have cometh to save the king and slay the dragon."],
+      ["wizardImg", "The city is in chaos. Thou cannot reach the castle in time."],
+      ["knightImg", "I shall persevere!!"],
+      ["wizardImg", "I do know of another way..."],
+      ["knightImg", "!!!"],
+      ["knightImg", "Out with it then wizard!!"],
+      ["wizardImg", "Ahead lays an abandoned dungeon infested with monsters."],
+      ["wizardImg", "But within is a passage that leads into the castle."],
+      ["knightImg", "Thank you wizard, I shall be on my way."],
+      ["wizardImg", "Good luck brave knight"],
+      ["knightImg", "As if..."]
     ];
     let curDialog = 0;
     const textbox = add([
       rect(width() - 200, 120, { radius: 32 }),
       origin("center"),
       pos(center().x, height() - 320),
-      outline(2)
+      outline(2),
+      health(1),
+      "textbox"
     ]);
     const txt = add([
       text("", { size: 32, width: width() - 230 }),
@@ -3003,18 +3023,20 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       origin("center")
     ]);
     const avatar = add([
-      sprite("wizardImg"),
       scale(3),
       pos(center().sub(0, 15))
     ]);
     dialoguecount = 0;
-    onKeyPress("space", () => {
+    onKeyPress("e", () => {
       curDialog = (curDialog + 1) % dialogs.length;
       if (dialoguecount < dialogs.length - 1) {
         updateDialogue();
         dialoguecount++;
       } else {
-        return true;
+        textbox.hurt(1);
+        destroy(textbox);
+        destroy(txt);
+        destroy(avatar);
       }
     });
     function updateDialogue() {
@@ -3033,7 +3055,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       outline(2)
     ]);
     const txt = add([
-      text("A renowned knight had been away on an important quest for the king when he received news of a dragon's attack on the castle. He grabbed his blade and headed towards the castle. Along the way, a daring fiend struck his leg with an arrow. He dressed the wound and persevered on as the mumurs grew louder. ", { size: 20, width: width() - 230 }),
+      text("A renowned knight had been away on an important quest for the king when he heard of a dragon's attack on the castle. He grabbed his blade and went to save the king. On the way, a daring fiend struck his leg. The knight dressed the wound and persevered forth. ", { size: 20, width: width() - 230 }),
       pos(textbox.pos),
       origin("center")
     ]);
@@ -3055,6 +3077,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       txt.destroy();
       textbox.destroy();
       continuebtn.destroy();
+      return true;
     });
   }
   var addButton2;
@@ -3070,72 +3093,52 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   // code/forest/assets.js
   var assets_exports = {};
   __export(assets_exports, {
+    loadBackground: () => loadBackground,
     loadHouse: () => loadHouse,
-    loadScene: () => loadScene,
     loadSign: () => loadSign,
     loadTree: () => loadTree
   });
-  function loadScene() {
-    addLevel([
-      "                                                 ",
-      "================================================="
-    ], {
-      width: 16,
-      height: 16,
-      pos: vec2(0, 370),
-      "=": () => [
-        sprite("tiles", {
-          frame: 65
-        }),
-        area(),
-        solid(),
-        origin("bot"),
-        color(46, 68, 21)
-      ],
-      "X": () => [
-        sprite("tree")
-      ]
-    });
+  function loadBackground() {
     loadSprite("bg", "sprites/background/bg.png");
-    add([
+    const background2 = add([
       sprite("bg"),
       scale(1.25, 0.5)
     ]);
-    loadSprite("tiles", "sprites/background/1bitplatformer.png", {
-      sliceX: 20,
-      sliceY: 20
-    });
+    return background2;
   }
   function loadTree(x, y) {
     loadSprite("tree", "sprites/props/tree.png");
-    add([
+    const tree2 = add([
       sprite("tree"),
       pos(x, y),
       color(180, 180, 180)
     ]);
+    return tree2;
   }
   function loadSign(x, y) {
     loadSprite("sign", "sprites/props/sign.png");
-    add([
+    const sign2 = add([
       sprite("sign"),
       pos(x, y),
       color(165, 165, 165),
       scale(1.5, 1.5)
     ]);
+    return sign2;
   }
   function loadHouse() {
     loadSprite("house", "sprites/props/house.png");
-    const house = add([
+    const house2 = add([
       sprite("house"),
       pos(50, 270),
       color(120, 120, 120)
     ]);
-    house.flipX(true);
+    house2.flipX(true);
+    return house2;
   }
   var init_assets = __esm({
     "code/forest/assets.js"() {
       init_kaboom();
-      __name(loadScene, "loadScene");
+      __name(loadBackground, "loadBackground");
       __name(loadTree, "loadTree");
       __name(loadSign, "loadSign");
       __name(loadHouse, "loadHouse");
@@ -3175,10 +3178,10 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       pos(80, 350),
       origin("center"),
       area(),
-      body(),
       scale(1.25, 1.25),
       solid(),
-      color(215, 215, 215)
+      color(215, 215, 215),
+      state("move", "idle")
     ]);
     player2.play("idle");
     return player2;
@@ -3210,7 +3213,6 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       pos(650, 350),
       origin("center"),
       area(),
-      body(),
       scale(1.25, 1.25),
       solid(),
       color(215, 215, 215)
@@ -3233,46 +3235,750 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     forestEvent: () => forestEvent
   });
   function forestEvent() {
-    loadScene2();
-    loadTree2(180, 220);
-    loadHouse2();
-    loadSign2(800, 345);
+    background = loadBackground2();
+    tree = loadTree2(180, 220);
+    house = loadHouse2();
+    sign = loadSign2(800, 345);
     player = loadPlayer2();
     wizard = loadWizard2();
     wizard.opacity = 0;
+    loadSprite("knightImg", "/sprites/knight/knightImg.png");
+    loadSprite("wizardImg", "/sprites/wizard/wizardImg.png");
+    var end = false;
+    var contEnd = false;
     loadSynopsis2();
-    count = 0;
-    SPEED = 60;
-    onUpdate(() => {
-      if (true) {
-        count++;
-      }
-      if (count < 200) {
-        player.move(SPEED, 0);
-      } else if (count < 500) {
-        wizard.opacity += 0.01;
-      } else if (count == 2e3) {
-        destroyAll();
-      }
+    onClick("Continue...", () => {
+      player.onStateUpdate("move", () => {
+        player.moveTo(650, 350, 70);
+      });
+      wait(8, () => player.enterState("idle"));
+      wait(7.5, () => wizard.opacity = 100);
+      wait(8, () => loadDialogue2());
     });
+    on("death", "textbox", () => {
+      destroy(tree);
+      destroy(house);
+      destroy(sign);
+      destroy(player);
+      destroy(wizard);
+      destroy(background);
+      wait(1, () => test());
+    });
+    if (end) {
+      destroy(background);
+      destroy(tree);
+      destroy(house);
+      destroy(sign);
+      destroy(player);
+      destroy(wizard);
+      destroy(background);
+    }
   }
-  var loadDialogue2, loadSynopsis2, addButton3, loadTree2, loadHouse2, loadSign2, loadScene2, loadPlayer2, loadWizard2;
+  var loadDialogue2, loadSynopsis2, addButton3, loadTree2, loadHouse2, loadSign2, loadBackground2, loadPlayer2, loadWizard2, test;
   var init_forest = __esm({
     "code/forest/forest.js"() {
       init_kaboom();
       ({ loadDialogue: loadDialogue2, loadSynopsis: loadSynopsis2, addButton: addButton3 } = (init_dialogue(), __toCommonJS(dialogue_exports)));
-      ({ loadTree: loadTree2, loadHouse: loadHouse2, loadSign: loadSign2, loadScene: loadScene2 } = (init_assets(), __toCommonJS(assets_exports)));
+      ({ loadTree: loadTree2, loadHouse: loadHouse2, loadSign: loadSign2, loadBackground: loadBackground2 } = (init_assets(), __toCommonJS(assets_exports)));
       ({ loadPlayer: loadPlayer2, loadWizard: loadWizard2 } = (init_characters(), __toCommonJS(characters_exports)));
+      ({ test } = (init_main(), __toCommonJS(main_exports)));
       __name(forestEvent, "forestEvent");
     }
   });
 
-  // code/main.js
-  init_kaboom();
-  var { forestEvent: forestEvent2 } = (init_forest(), __toCommonJS(forest_exports));
-  to({
-    background: [0, 0, 0]
+  // code/levels.js
+  var levels_exports = {};
+  __export(levels_exports, {
+    levelOne: () => levelOne
   });
-  forestEvent2();
+  function levelOne() {
+    addLevel([
+      "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "xxxxxxxxxxxxxxxxx            ",
+      "           xxxxxx            ",
+      "           xxxxxx            ",
+      "                             ",
+      "                             ",
+      "                             ",
+      "                             ",
+      "           xxxxxx            ",
+      "           xxxxxx            ",
+      "xxxxxxxxxxxxxxxxx            ",
+      "xxxxxxxxxxxxxxxxx            ",
+      "xxxxxxxxxxxxxxxxx            ",
+      "xxxxxxxxxxxxxxxxx            ",
+      "xxxxxxxxxxxxxxxxx            ",
+      "xxxxxxxxxxxxxxxxx            ",
+      "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    ], {
+      width: 16,
+      height: 16,
+      " ": () => [
+        sprite("floor", { frame: ~~rand(0, 8) })
+      ]
+    });
+    const map2 = addLevel([
+      "tLWtttttttt      ttttttttLWtt",
+      "cDRwwwwwwwwl     cwwwwwwwDRwd",
+      "l          atttttl          r",
+      "l          wwwwww           r",
+      "l                           r",
+      "l                           r",
+      "l          tttttt           r",
+      "l          cwwwwwl          r",
+      "atttttttttb      l          r",
+      "wwwwwwwwwww      l     $    r",
+      "                 l          r",
+      "                 l          r",
+      "                 l          r",
+      "                 l          r",
+      "                 attttttttttb",
+      "                 wwwwwwwwwwww"
+    ], {
+      width: 16,
+      height: 16,
+      "$": () => [
+        sprite("chest"),
+        area(),
+        solid(),
+        { opened: false },
+        "chest"
+      ],
+      "a": () => [
+        sprite("wall_botleft"),
+        area({ width: 4 }),
+        solid()
+      ],
+      "b": () => [
+        sprite("wall_botright"),
+        area({ width: 4, offset: vec2(12, 0) }),
+        solid()
+      ],
+      "c": () => [
+        sprite("wall_topleft"),
+        area(),
+        solid()
+      ],
+      "d": () => [
+        sprite("wall_topright"),
+        area(),
+        solid()
+      ],
+      "w": () => [
+        sprite("wall"),
+        area(),
+        solid()
+      ],
+      "t": () => [
+        sprite("wall_top"),
+        area({ height: 4, offset: vec2(0, 12) }),
+        solid()
+      ],
+      "l": () => [
+        sprite("wall_left"),
+        area({ width: 4 }),
+        solid()
+      ],
+      "r": () => [
+        sprite("wall_right"),
+        area({ width: 4, offset: vec2(12, 0) }),
+        solid()
+      ],
+      "D": () => [
+        sprite("doorblclosed"),
+        area(),
+        solid()
+      ],
+      "R": () => [
+        sprite("doorbrclosed"),
+        area(),
+        solid()
+      ],
+      "L": () => [
+        sprite("doortlclosed"),
+        area(),
+        solid()
+      ],
+      "W": () => [
+        sprite("doortrclosed"),
+        area(),
+        solid()
+      ],
+      "T": () => [
+        sprite("doorblopen"),
+        area(),
+        solid()
+      ],
+      "Y": () => [
+        sprite("doorbropen"),
+        area(),
+        solid()
+      ],
+      "G": () => [
+        sprite("doortlopen"),
+        area(),
+        solid()
+      ],
+      "H": () => [
+        sprite("doortropen"),
+        area(),
+        solid()
+      ]
+    });
+    return map2;
+  }
+  var init_levels = __esm({
+    "code/levels.js"() {
+      init_kaboom();
+      __name(levelOne, "levelOne");
+    }
+  });
+
+  // code/controls.js
+  var controls_exports = {};
+  __export(controls_exports, {
+    playerControls: () => playerControls
+  });
+  function playerControls(player2, weapon2) {
+    var right = true;
+    var space = false;
+    var up = false;
+    var down = false;
+    onKeyPress("space", () => {
+      if (up && right) {
+        weapon2.follow.offset = vec2(4, -4);
+      } else if (down && right) {
+        weapon2.follow.offset = vec2(-8, 20);
+      } else if (up) {
+        weapon2.follow.offset = vec2(-4, -6);
+      } else if (down) {
+        weapon2.follow.offset = vec2(9, 21);
+      } else if (right) {
+        weapon2.follow.offset = vec2(10, 15);
+      } else {
+        weapon2.follow.offset = vec2(-10, 15);
+      }
+    });
+    onKeyRelease("space", () => {
+      if (up && right) {
+        weapon2.follow.offset = vec2(4, 4);
+      } else if (down && right) {
+        weapon2.follow.offset = vec2(-8, 14);
+      } else if (up) {
+        weapon2.follow.offset = vec2(-4, 6);
+      } else if (down) {
+        weapon2.follow.offset = vec2(9, 15);
+      } else if (right) {
+        weapon2.follow.offset = vec2(-4, 15);
+      } else {
+        weapon2.follow.offset = vec2(4, 15);
+      }
+    });
+    onKeyPress("enter", () => {
+      every("chest", (c) => {
+        if (player2.isTouching(c) && c.opened == false) {
+          c.play("open");
+          c.opened = true;
+        }
+      });
+    });
+    const SPEED = 120;
+    const dirs = {
+      "left": LEFT,
+      "right": RIGHT,
+      "up": UP,
+      "down": DOWN
+    };
+    player2.onUpdate(() => {
+      camPos(player2.pos);
+    });
+    onKeyDown("right", () => {
+      weapon2.angle = 0;
+      player2.flipX(false);
+      weapon2.flipX(false);
+      right = true;
+      up = false;
+      down = false;
+      player2.move(SPEED, 0);
+      weapon2.follow.offset = vec2(-4, 15);
+    });
+    onKeyDown("left", () => {
+      weapon2.angle = 0;
+      player2.flipX(true);
+      player2.move(-SPEED, 0);
+      weapon2.flipX(true);
+      right = false;
+      up = false;
+      down = false;
+      weapon2.follow.offset = vec2(4, 15);
+    });
+    onKeyDown("up", () => {
+      player2.move(0, -SPEED);
+      if (down) {
+        weapon2.angle = 0;
+      }
+      if (right) {
+        weapon2.angle = 270;
+        weapon2.follow.offset = vec2(4, 4);
+      } else {
+        weapon2.angle = 90;
+        weapon2.follow.offset = vec2(-4, 6);
+      }
+      up = true;
+      down = false;
+    });
+    onKeyDown("down", () => {
+      player2.move(0, SPEED);
+      if (up) {
+        weapon2.angle = 0;
+      }
+      if (right) {
+        weapon2.angle = 90;
+        weapon2.follow.offset = vec2(-8, 10);
+      } else {
+        weapon2.angle = 270;
+        weapon2.follow.offset = vec2(9, 10);
+      }
+      down = true;
+      up = false;
+    });
+    onKeyPress(["left", "right", "up", "down"], () => {
+      player2.play("run");
+    });
+    onKeyRelease(["left", "right", "up", "down"], () => {
+      if (!isKeyDown("left") && !isKeyDown("right") && !isKeyDown("up") && !isKeyDown("down")) {
+        player2.play("idle");
+      }
+    });
+  }
+  var init_controls = __esm({
+    "code/controls.js"() {
+      init_kaboom();
+      __name(playerControls, "playerControls");
+    }
+  });
+
+  // code/audio.js
+  var audio_exports = {};
+  __export(audio_exports, {
+    changuito: () => changuito,
+    pogaudio: () => pogaudio,
+    pogaudiosito: () => pogaudiosito
+  });
+  function pogaudio() {
+    loadSound("Music", "/sounds/medieval.mp3");
+    const music = play("Music", {
+      loop: true
+    });
+    onKeyPress("m", () => {
+      if (music.isPaused()) {
+        music.play();
+      } else {
+        music.pause();
+      }
+    });
+    volume(0.01);
+  }
+  function pogaudiosito() {
+    loadSound("die", "/sounds/die.mp3");
+    play("die");
+    volume(0.01);
+  }
+  function changuito() {
+    loadSound("open_chest", "/sounds/chest_open.mp3");
+    play("open_chest");
+  }
+  var init_audio = __esm({
+    "code/audio.js"() {
+      init_kaboom();
+      __name(pogaudio, "pogaudio");
+      __name(pogaudiosito, "pogaudiosito");
+      __name(changuito, "changuito");
+    }
+  });
+
+  // code/objects.js
+  var objects_exports = {};
+  __export(objects_exports, {
+    addDagger: () => addDagger,
+    addPlayer: () => addPlayer,
+    spawnLizard: () => spawnLizard,
+    spawnOgre: () => spawnOgre
+  });
+  function addPlayer(map2) {
+    const player2 = add([
+      pos(map2.getPos(2, 2)),
+      sprite("hero", { anim: "idle" }),
+      area({ width: 12, height: 12, offset: vec2(0, 6) }),
+      health(playerHealth),
+      solid(),
+      origin("center"),
+      "player"
+    ]);
+    on("death", "player", (e) => {
+      destroy(e);
+      shake(5);
+      volume(0.01);
+      addKaboom(e.pos);
+    });
+    return player2;
+  }
+  function spawnOgre(x, y, player2, weapon2) {
+    const ogre = add([
+      sprite("ogre"),
+      pos(map.getPos(x, y)),
+      origin("bot"),
+      area({ scale: 0.5 }),
+      health(ogreHealth),
+      solid(),
+      state("move"),
+      "enemy"
+    ]);
+    ogre.onStateEnter("move", () => __async(this, null, function* () {
+      yield wait(2);
+      ogre.enterState("idle");
+    }));
+    ogre.onStateUpdate("move", () => {
+      var distanceX = Math.abs(player2.pos.x - ogre.pos.x);
+      var distanceY = Math.abs(player2.pos.y - ogre.pos.y);
+      if (!player2.exists())
+        return;
+      if (distanceX < 150 && distanceY < 150) {
+        const dir = player2.pos.sub(ogre.pos).unit();
+        ogre.move(dir.scale(10));
+      }
+    });
+    player2.onCollide("enemy", (ogre2) => {
+      player2.hurt(1);
+    });
+    loadSound("die", "/sounds/die.mp3");
+    onKeyPress("space", () => {
+      onCollide("dagger", "enemy", (weapon3, ogre2) => {
+        ogre2.hurt(1);
+        ogre2.color = rgb(255, 0, 0);
+      });
+    });
+    on("death", "enemy", (e) => {
+      destroy(e);
+      shake(2);
+      play("die");
+      volume(0.01);
+    });
+  }
+  function spawnLizard(x, y, player2, weapon2) {
+    const Lizard = add([
+      sprite("Lizard"),
+      pos(map.getPos(x, y)),
+      origin("bot"),
+      area({ scale: 0.5 }),
+      health(lizardHealth),
+      solid(),
+      state("move", "idle"),
+      "enemy"
+    ]);
+    Lizard.onStateEnter("idle", () => __async(this, null, function* () {
+      yield wait(0.5);
+      eLizard.enterState("move");
+    }));
+    Lizard.onStateEnter("move", () => __async(this, null, function* () {
+      yield wait(2);
+      Lizard.enterState("idle");
+    }));
+    Lizard.onStateUpdate("move", () => {
+      var distanceX = Math.abs(player2.pos.x - Lizard.pos.x);
+      var distanceY = Math.abs(player2.pos.y - Lizard.pos.y);
+      if (!player2.exists())
+        return;
+      if (distanceX < 125 && distanceY < 125) {
+        const dir = player2.pos.sub(Lizard.pos).unit();
+        Lizard.move(dir.scale(40));
+      }
+    });
+    player2.onCollide("enemy", (Lizard2) => {
+      player2.hurt(1);
+    });
+    loadSound("die", "/sounds/die.mp3");
+    onKeyPress("space", () => {
+      onCollide("dagger", "enemy", (weapon3, Lizard2) => {
+        Lizard2.hurt(1);
+        Lizard2.color = rgb(255, 0, 0);
+      });
+    });
+    on("death", "enemy", (e) => {
+      destroy(e);
+      shake(2);
+      play("die");
+      volume(0.01);
+    });
+  }
+  function addDagger(player2) {
+    const dagger = add([
+      pos(),
+      sprite("dagger"),
+      origin("bot"),
+      follow(player2, vec2(-4, 16)),
+      area(),
+      "dagger"
+    ]);
+    on("death", "player", () => {
+      destroy(dagger);
+    });
+    return dagger;
+  }
+  var playerControls2, pogaudio2, pogaudiosito2, changuito2, playerHealth, ogreHealth, lizardHealth;
+  var init_objects = __esm({
+    "code/objects.js"() {
+      init_kaboom();
+      playerControls2 = (init_controls(), __toCommonJS(controls_exports));
+      ({ pogaudio: pogaudio2, pogaudiosito: pogaudiosito2, changuito: changuito2 } = (init_audio(), __toCommonJS(audio_exports)));
+      playerHealth = 10;
+      ogreHealth = 5;
+      lizardHealth = 1;
+      __name(addPlayer, "addPlayer");
+      __name(spawnOgre, "spawnOgre");
+      __name(spawnLizard, "spawnLizard");
+      __name(addDagger, "addDagger");
+    }
+  });
+
+  // code/spawn.js
+  var spawn_exports = {};
+  __export(spawn_exports, {
+    levelOneSpawn: () => levelOneSpawn
+  });
+  function levelOneSpawn(player2, weapon2) {
+    spawnOgre2(4, 8, player2, weapon2);
+    spawnOgre2(8, 8, player2, weapon2);
+    spawnLizard2(26, 5, player2, weapon2);
+    spawnLizard2(25, 8, player2, weapon2);
+    spawnLizard2(23, 10, player2, weapon2);
+    spawnLizard2(20, 12, player2, weapon2);
+  }
+  var spawnOgre2, spawnLizard2;
+  var init_spawn = __esm({
+    "code/spawn.js"() {
+      init_kaboom();
+      ({ spawnOgre: spawnOgre2, spawnLizard: spawnLizard2 } = (init_objects(), __toCommonJS(objects_exports)));
+      __name(levelOneSpawn, "levelOneSpawn");
+    }
+  });
+
+  // code/start.js
+  var start_exports = {};
+  var levelOne2, addPlayer2, addSword, spawnOgre3, spawnLizard3, addDagger2, playerControls3, levelOneSpawn2, pogaudio3;
+  var init_start = __esm({
+    "code/start.js"() {
+      init_kaboom();
+      ({ levelOne: levelOne2 } = (init_levels(), __toCommonJS(levels_exports)));
+      ({ addPlayer: addPlayer2, addSword, spawnOgre: spawnOgre3, spawnLizard: spawnLizard3, addDagger: addDagger2 } = (init_objects(), __toCommonJS(objects_exports)));
+      ({ playerControls: playerControls3 } = (init_controls(), __toCommonJS(controls_exports)));
+      ({ levelOneSpawn: levelOneSpawn2 } = (init_spawn(), __toCommonJS(spawn_exports)));
+      ({ pogaudio: pogaudio3 } = (init_audio(), __toCommonJS(audio_exports)));
+      map = levelOne2();
+      player = addPlayer2(map);
+      weapon = addDagger2(player);
+      levelOneSpawn2(player, weapon);
+      playerControls3(player, weapon);
+    }
+  });
+
+  // code/main.js
+  var main_exports = {};
+  __export(main_exports, {
+    test: () => test2
+  });
+  function test2() {
+    const { dungeon } = (init_start(), __toCommonJS(start_exports));
+  }
+  var forestEvent2;
+  var init_main = __esm({
+    "code/main.js"() {
+      init_kaboom();
+      to({
+        background: [0, 0, 0]
+      });
+      loadSpriteAtlas("/sprites/dungeontileset.png", {
+        "hero": {
+          "x": 128,
+          "y": 100,
+          "width": 144,
+          "height": 28,
+          "sliceX": 9,
+          "anims": {
+            "idle": {
+              "from": 0,
+              "to": 3,
+              "speed": 3,
+              "loop": true
+            },
+            "run": {
+              "from": 4,
+              "to": 7,
+              "speed": 10,
+              "loop": true
+            },
+            "hit": 8
+          }
+        },
+        "Lizard": {
+          "x": 128,
+          "y": 196,
+          "width": 144,
+          "height": 28,
+          "sliceX": 9,
+          "anims": {
+            "idle": {
+              "from": 0,
+              "to": 3,
+              "speed": 3,
+              "loop": true
+            },
+            "run": {
+              "from": 4,
+              "to": 7,
+              "speed": 10,
+              "loop": true
+            },
+            "hit": 8
+          }
+        },
+        "ogre": {
+          "x": 16,
+          "y": 320,
+          "width": 256,
+          "height": 32,
+          "sliceX": 8,
+          "anims": {
+            "idle": {
+              "from": 0,
+              "to": 3,
+              "speed": 3,
+              "loop": true
+            },
+            "run": {
+              "from": 4,
+              "to": 7,
+              "speed": 10,
+              "loop": true
+            }
+          }
+        },
+        "floor": {
+          "x": 16,
+          "y": 64,
+          "width": 48,
+          "height": 48,
+          "sliceX": 3,
+          "sliceY": 3
+        },
+        "chest": {
+          "x": 304,
+          "y": 304,
+          "width": 48,
+          "height": 16,
+          "sliceX": 3,
+          "anims": {
+            "open": {
+              "from": 0,
+              "to": 2,
+              "speed": 20,
+              "loop": false
+            },
+            "close": {
+              "from": 2,
+              "to": 0,
+              "speed": 20,
+              "loop": false
+            }
+          }
+        },
+        "sword": {
+          "x": 322,
+          "y": 81,
+          "width": 12,
+          "height": 30
+        },
+        "wall": {
+          "x": 16,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        "wall_top": {
+          "x": 16,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        "wall_left": {
+          "x": 16,
+          "y": 128,
+          "width": 16,
+          "height": 16
+        },
+        "wall_right": {
+          "x": 0,
+          "y": 128,
+          "width": 16,
+          "height": 16
+        },
+        "wall_topleft": {
+          "x": 32,
+          "y": 128,
+          "width": 16,
+          "height": 16
+        },
+        "wall_topright": {
+          "x": 48,
+          "y": 128,
+          "width": 16,
+          "height": 16
+        },
+        "wall_botleft": {
+          "x": 32,
+          "y": 144,
+          "width": 16,
+          "height": 16
+        },
+        "wall_botright": {
+          "x": 48,
+          "y": 144,
+          "width": 16,
+          "height": 16
+        },
+        "doorblclosed": {
+          "x": 32,
+          "y": 240,
+          "width": 16,
+          "height": 16
+        },
+        "doorbrclosed": {
+          "x": 48,
+          "y": 240,
+          "width": 16,
+          "height": 16
+        },
+        "doortlclosed": {
+          "x": 32,
+          "y": 224,
+          "width": 16,
+          "height": 16
+        },
+        "doortrclosed": {
+          "x": 48,
+          "y": 224,
+          "width": 16,
+          "height": 16
+        }
+      });
+      loadSprite("dagger", "/sprites/dagger-1.png");
+      loadSprite("boom", "/sprites/boom.png");
+      ({ forestEvent: forestEvent2 } = (init_forest(), __toCommonJS(forest_exports)));
+      forestEvent2();
+      __name(test2, "test");
+    }
+  });
+  init_main();
 })();
 //# sourceMappingURL=game.js.map

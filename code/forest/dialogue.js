@@ -3,23 +3,20 @@ const {addButton} = require("./button.js")
 
 function loadDialogue() {
 
-	loadSprite("knightImg", "/sprites/knight/knightImg.png")
-	loadSprite("wizardImg", "/sprites/wizard/wizardImg.png")
-
 	const dialogs = [
-			[ "wizardImg", "Greetings knight. Thou must cometh from afar." ],
+			[ "wizardImg", "Greetings knight. Thou must cometh to slay the dragon." ],
 			[ "knightImg", "Greetings Wizard. It is as thou sayeth." ],
-      [ "knightImg", "I have cometh from the lands of Gregarious." ],
-			[ "knightImg", "I seek to slay the tormenter of these lands..."],
-      [ "knightImg", "The Dragon Lord of Communism Marxist!"],
-			[ "wizardImg", "Countless others have attemtped to slay that vile dragon..." ],
-      [ "wizardImg", "Yet none has suceeded." ],
-			[ "wizardImg", "I shall not allow thoust to challenge the dragon without a test." ],
-			[ "knightImg", "As if..." ],
-			[ "wizardImg", "Ahead lays a dungeon riddled with monsters." ],
-      [ "wizardImg", "Only once thou clear the dungeon, can thou pass." ],
-			[ "knightImg", "As if..." ],
-      [ "wizardImg", "I shall wait for you on the other side" ],
+      [ "knightImg", "I have cometh to save the king and slay the dragon." ],
+			[ "wizardImg", "The city is in chaos. Thou cannot reach the castle in time." ],
+      [ "knightImg", "I shall persevere!!" ],
+			[ "wizardImg", "I do know of another way..." ],
+			[ "knightImg", "!!!" ],
+      [ "knightImg", "Out with it then wizard!!" ],
+			[ "wizardImg", "Ahead lays an abandoned dungeon infested with monsters." ],
+      [ "wizardImg", "But within is a passage that leads into the castle." ],
+			[ "knightImg", "Thank you wizard, I shall be on my way." ],
+      [ "wizardImg", "Good luck brave knight" ],
+      [ "knightImg", "As if..." ],
 	]
 	// Update the on screen sprite & text
 	let curDialog = 0
@@ -30,6 +27,8 @@ function loadDialogue() {
 			origin("center"),
 			pos(center().x, height() - 320),
 			outline(2),
+      health(1),
+      "textbox"
 	])
 
 	// Text
@@ -38,10 +37,9 @@ function loadDialogue() {
 			pos(textbox.pos),
 			origin("center")
 	])
-	
+	//loadSprite("knightT", "/sprites/knight/knightImg.png")
 	// Character avatar
 	const avatar = add([
-		sprite("wizardImg"),
 		scale(3),
 		
 		pos(center().sub(0, 15))
@@ -49,7 +47,7 @@ function loadDialogue() {
   
   dialoguecount = 0
   
-	onKeyPress("space", () => {
+	onKeyPress("e", () => {
 		// Cycle through the dialogs
 		curDialog = (curDialog + 1) % dialogs.length
 
@@ -58,14 +56,17 @@ function loadDialogue() {
 			dialoguecount++
 		}
 		else {
-			return true
+      textbox.hurt(1)
+			destroy(textbox)
+      destroy(txt)
+      destroy(avatar)
 		}
 			
 	})
 
 	function updateDialogue() {
 
-		const [ char, dialog ] = dialogs[curDialog]
+		const [char, dialog ] = dialogs[curDialog]
 		avatar.use(sprite(char))
 		// Update the dialog text
 		txt.text = dialog
@@ -86,7 +87,7 @@ function loadSynopsis() {
 
 	// Text
 	const txt = add([
-			text("A renowned knight had been away on an important quest for the king when he received news of a dragon's attack on the castle. He grabbed his blade and headed towards the castle. Along the way, a daring fiend struck his leg with an arrow. He dressed the wound and persevered on as the mumurs grew louder. ", { size: 20, width: width() - 230 }),
+			text("A renowned knight had been away on an important quest for the king when he heard of a dragon's attack on the castle. He grabbed his blade and went to save the king. On the way, a daring fiend struck his leg. The knight dressed the wound and persevered forth. ", { size: 20, width: width() - 230 }),
 			pos(textbox.pos),
 			origin("center")
 	])
@@ -117,6 +118,8 @@ function loadSynopsis() {
     txt.destroy()
     textbox.destroy()
     continuebtn.destroy()
+
+    return true
   })
 
   

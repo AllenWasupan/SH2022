@@ -34,10 +34,10 @@ function loadPlayer() {
 		pos(80,350),
 		origin("center"),
 		area(),
-		body(),
 		scale(1.25,1.25),
 		solid(),
 		color(215,215,215),
+    state("move", "idle")
 		
 	])
 
@@ -78,7 +78,6 @@ function loadWizard() {
 		pos(650,350),
 		origin("center"),
 		area(),
-		body(),
 		scale(1.25,1.25),
 		solid(),
 		color(215,215,215),
