@@ -31,8 +31,14 @@ function forestEvent(){
     else if (count < 500) {
       wizard.opacity += .01
     }
+    else if (count == 2000) {
+      destroyAll()
+    }
     
   })
+
+
+	
 
 }
 

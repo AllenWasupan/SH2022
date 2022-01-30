@@ -86,16 +86,40 @@ function loadSynopsis() {
 
 	// Text
 	const txt = add([
-			text("A renowned knight, he was on a very important quest for the king. But, as he was returning he received news of a dragon attacking the castle. He needs to save the king but as he was on his way, he was struck in the leg by an arrow from a daring fiend. As he dressed his wound, he realized  The murmurs and growls are growing louder in the breeze... ", { size: 20, width: width() - 230 }),
+			text("A renowned knight had been away on an important quest for the king when he received news of a dragon's attack on the castle. He grabbed his blade and headed towards the castle. Along the way, a daring fiend struck his leg with an arrow. He dressed the wound and persevered on as the mumurs grew louder. ", { size: 20, width: width() - 230 }),
 			pos(textbox.pos),
 			origin("center")
 	])
+	
+// addButton("Start", vec2(200, 100), () => debug.log("oh hi"))
+// addButton("Quit", vec2(200, 200), () => debug.log("bye"))
 
-	addButton("Continue...", center(), () => onClick(() => {
-		textbox.hidden = true,
-		txt.hidden = true
-	}
-))
+	const continuebtn = add([
+		text("Continue...", { size: 20, width: width() - 230 }),
+		pos(center()),
+    area(),
+		origin("center"),
+    "Continue..."
+])
+
+
+	// addButton("Continue...", center(), () => txt.destroy(), textbox.destroy())
+  onUpdate("Continue...", (continuebtn) => {
+    if (continuebtn.isHovering()) {
+
+      continuebtn.scale = vec2(1.5)
+    } else {
+      continuebtn.scale = vec2(1)
+    }
+  })
+
+  onClick("Continue...", () => {
+    txt.destroy()
+    textbox.destroy()
+    continuebtn.destroy()
+  })
+
+  
 }
 
 
