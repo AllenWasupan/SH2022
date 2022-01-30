@@ -1,5 +1,5 @@
 import kaboom from "kaboom"
-const {loadDialogue} = require("./dialogue.js")
+const {loadDialogue, loadSynopsis, addButton} = require("./dialogue.js")
 const {loadTree, loadHouse, loadSign, loadScene} = require("./assets.js")
 const {loadPlayer, loadWizard} = require("./characters.js")
 
@@ -10,25 +10,30 @@ function forestEvent(){
 	loadHouse()
 	loadSign(800, 345)
 	player = loadPlayer()
-	loadDialogue(player)
-
+  wizard = loadWizard()
+  wizard.opacity = 0
 // -------------------------------------------------------
 
-	finishedDialogue = false
+	loadSynopsis()
+
 
   count = 0
-  SPEED = 80
+  SPEED = 60
   onUpdate(() => {
-    if (finishedDialogue) {
+    if (true && true) {
       count++
-      loadWizard()  
     }
-  
-    if (count < 500 && finishedDialogue) {
+    
+    if (count < 200) {
       player.move(SPEED, 0)
+      
+    }
+    else if (count < 500) {
+      wizard.opacity += .01
     }
     
   })
+
 }
 
 export {forestEvent}

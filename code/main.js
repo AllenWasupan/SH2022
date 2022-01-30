@@ -3,7 +3,12 @@ const {forestEvent} = require("./forest/forest.js")
 
 // initialize context
 
-kaboom()
+kaboom({
+	background: [ 0, 0, 0]
+})
 
 
 forestEvent()
+
+
+

@@ -28,14 +28,15 @@ function loadScene() {
 	})
 
 	// Background
-	loadSprite("bg", "sprites/bg.png")
+	loadSprite("bg", "sprites/background/bg.png")
 	add ([
 		sprite("bg"),
+		//origin("center"),
 		scale(1.25,0.5),
 	])
 
 	// Ground
-	loadSprite("tiles", "sprites/1bitplatformer.png", {
+	loadSprite("tiles", "sprites/background/1bitplatformer.png", {
 		sliceX: 20,
 		sliceY: 20
 	})
@@ -43,7 +44,7 @@ function loadScene() {
 
 function loadTree(x, y) {
 	// Tree
-	loadSprite("tree", "sprites/tree.png")
+	loadSprite("tree", "sprites/props/tree.png")
 		add ([
 			sprite("tree"),
 			pos(x,y),
@@ -53,7 +54,7 @@ function loadTree(x, y) {
 
 function loadSign(x, y) {
 	// Tree
-	loadSprite("sign", "sprites/sign.png")
+	loadSprite("sign", "sprites/props/sign.png")
 		add ([
 			sprite("sign"),
 			pos(x,y),
@@ -64,7 +65,7 @@ function loadSign(x, y) {
 
 function loadHouse() {
 	// House
-	loadSprite("house", "sprites/house.png")
+	loadSprite("house", "sprites/props/house.png")
 	const house = add ([
 		sprite("house"),
 		pos(50,270),

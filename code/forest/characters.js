@@ -47,7 +47,7 @@ function loadPlayer() {
 
 function loadWizard() {
 	// Knight
-	loadSprite("wizard", "/sprites/wizard.png", {
+	loadSprite("wizard", "/sprites/wizard/wizard.png", {
 		// The image contains 9 frames layed out horizontally, slice it into individual frames
 		"x": 0,
 		"y": 0,
@@ -86,6 +86,8 @@ function loadWizard() {
 	])
 	wizard.flipX(true)
 	wizard.play("idle")
+  return wizard
+
 }
 
 

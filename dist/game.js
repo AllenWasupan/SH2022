@@ -2934,27 +2934,67 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     }
   });
 
+  // code/forest/button.js
+  var button_exports = {};
+  __export(button_exports, {
+    addButton: () => addButton
+  });
+  function addButton(txt, p, f2) {
+    const btn = add([
+      text(txt),
+      pos(p),
+      area({ cursor: "pointer" }),
+      scale(0.25),
+      origin("center")
+    ]);
+    btn.onClick(f2);
+    btn.onUpdate(() => {
+      if (btn.isHovering()) {
+        const t = time() * 10;
+        btn.color = rgb(wave(0, 255, t), wave(0, 255, t + 2), wave(0, 255, t + 4));
+        btn.scale = vec2(0.35);
+      } else {
+        btn.scale = vec2(0.25);
+        btn.color = rgb();
+      }
+    });
+  }
+  var init_button = __esm({
+    "code/forest/button.js"() {
+      init_kaboom();
+      __name(addButton, "addButton");
+    }
+  });
+
   // code/forest/dialogue.js
   var dialogue_exports = {};
   __export(dialogue_exports, {
-    loadDialogue: () => loadDialogue
+    loadDialogue: () => loadDialogue,
+    loadSynopsis: () => loadSynopsis
   });
-  function loadDialogue(knight) {
+  function loadDialogue() {
+    loadSprite("knightImg", "/sprites/knight/knightImg.png");
+    loadSprite("wizardImg", "/sprites/wizard/wizardImg.png");
     const dialogs = [
-      ["knight", "My guttual tendencies are getting attacked."],
-      ["knight", "As if..."],
-      ["knight", "Argh! My rampallian!"],
-      ["knight", "You would be best served well."],
-      ["knight", "The King awaits a platter of roast suckling pig."],
-      ["knight", "As if..."],
-      ["knight", "GET OUT OF MY FOREST!"],
-      ["knight", "As if..."]
+      ["wizardImg", "Greetings knight. Thou must cometh from afar."],
+      ["knightImg", "Greetings Wizard. It is as thou sayeth."],
+      ["knightImg", "I have cometh from the lands of Gregarious."],
+      ["knightImg", "I seek to slay the tormenter of these lands..."],
+      ["knightImg", "The Dragon Lord of Communism Marxist!"],
+      ["wizardImg", "Countless others have attemtped to slay that vile dragon..."],
+      ["wizardImg", "Yet none has suceeded."],
+      ["wizardImg", "I shall not allow thoust to challenge the dragon without a test."],
+      ["knightImg", "As if..."],
+      ["wizardImg", "Ahead lays a dungeon riddled with monsters."],
+      ["wizardImg", "Only once thou clear the dungeon, can thou pass."],
+      ["knightImg", "As if..."],
+      ["wizardImg", "I shall wait for you on the other side"]
     ];
     let curDialog = 0;
     const textbox = add([
       rect(width() - 200, 120, { radius: 32 }),
       origin("center"),
-      pos(center().x, height() - 100),
+      pos(center().x, height() - 320),
       outline(2)
     ]);
     const txt = add([
@@ -2963,16 +3003,19 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       origin("center")
     ]);
     const avatar = add([
-      sprite("knight", {
-        frame: 2
-      }),
+      sprite("wizardImg"),
       scale(3),
-      origin("center"),
-      pos(center().sub(0, 50))
+      pos(center().sub(0, 15))
     ]);
+    dialoguecount = 0;
     onKeyPress("space", () => {
       curDialog = (curDialog + 1) % dialogs.length;
-      updateDialogue();
+      if (dialoguecount < dialogs.length - 1) {
+        updateDialogue();
+        dialoguecount++;
+      } else {
+        return true;
+      }
     });
     function updateDialogue() {
       const [char, dialog] = dialogs[curDialog];
@@ -2982,10 +3025,29 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     __name(updateDialogue, "updateDialogue");
     updateDialogue();
   }
+  function loadSynopsis() {
+    const textbox = add([
+      rect(width() - 160, 160, { radius: 32 }),
+      origin("center"),
+      pos(center().x, height() - 320),
+      outline(2)
+    ]);
+    const txt = add([
+      text("A renowned knight, he was on a very important quest for the king. But, as he was returning he received news of a dragon attacking the castle. He needs to save the king but as he was on his way, he was struck in the leg by an arrow from a daring fiend. As he dressed his wound, he realized  The murmurs and growls are growing louder in the breeze... ", { size: 20, width: width() - 230 }),
+      pos(textbox.pos),
+      origin("center")
+    ]);
+    addButton2("Continue...", center(), () => onClick(() => {
+      textbox.hidden = true, txt.hidden = true;
+    }));
+  }
+  var addButton2;
   var init_dialogue = __esm({
     "code/forest/dialogue.js"() {
       init_kaboom();
+      ({ addButton: addButton2 } = (init_button(), __toCommonJS(button_exports)));
       __name(loadDialogue, "loadDialogue");
+      __name(loadSynopsis, "loadSynopsis");
     }
   });
 
@@ -3018,18 +3080,18 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         sprite("tree")
       ]
     });
-    loadSprite("bg", "sprites/bg.png");
+    loadSprite("bg", "sprites/background/bg.png");
     add([
       sprite("bg"),
       scale(1.25, 0.5)
     ]);
-    loadSprite("tiles", "sprites/1bitplatformer.png", {
+    loadSprite("tiles", "sprites/background/1bitplatformer.png", {
       sliceX: 20,
       sliceY: 20
     });
   }
   function loadTree(x, y) {
-    loadSprite("tree", "sprites/tree.png");
+    loadSprite("tree", "sprites/props/tree.png");
     add([
       sprite("tree"),
       pos(x, y),
@@ -3037,7 +3099,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     ]);
   }
   function loadSign(x, y) {
-    loadSprite("sign", "sprites/sign.png");
+    loadSprite("sign", "sprites/props/sign.png");
     add([
       sprite("sign"),
       pos(x, y),
@@ -3046,7 +3108,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     ]);
   }
   function loadHouse() {
-    loadSprite("house", "sprites/house.png");
+    loadSprite("house", "sprites/props/house.png");
     const house = add([
       sprite("house"),
       pos(50, 270),
@@ -3106,7 +3168,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     return player2;
   }
   function loadWizard() {
-    loadSprite("wizard", "/sprites/wizard.png", {
+    loadSprite("wizard", "/sprites/wizard/wizard.png", {
       "x": 0,
       "y": 0,
       "width": 144,
@@ -3127,7 +3189,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         }
       }
     });
-    const wizard = add([
+    const wizard2 = add([
       sprite("wizard"),
       pos(650, 350),
       origin("center"),
@@ -3137,8 +3199,9 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       solid(),
       color(215, 215, 215)
     ]);
-    wizard.flipX(true);
-    wizard.play("idle");
+    wizard2.flipX(true);
+    wizard2.play("idle");
+    return wizard2;
   }
   var init_characters = __esm({
     "code/forest/characters.js"() {
@@ -3159,25 +3222,27 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     loadHouse2();
     loadSign2(800, 345);
     player = loadPlayer2();
-    loadDialogue2(player);
-    finishedDialogue = false;
+    wizard = loadWizard2();
+    wizard.opacity = 0;
+    loadSynopsis2();
     count = 0;
-    SPEED = 80;
+    SPEED = 60;
     onUpdate(() => {
-      if (finishedDialogue) {
+      if (true) {
         count++;
-        loadWizard2();
       }
-      if (count < 500 && finishedDialogue) {
+      if (count < 200) {
         player.move(SPEED, 0);
+      } else if (count < 500) {
+        wizard.opacity += 0.01;
       }
     });
   }
-  var loadDialogue2, loadTree2, loadHouse2, loadSign2, loadScene2, loadPlayer2, loadWizard2;
+  var loadDialogue2, loadSynopsis2, addButton3, loadTree2, loadHouse2, loadSign2, loadScene2, loadPlayer2, loadWizard2;
   var init_forest = __esm({
     "code/forest/forest.js"() {
       init_kaboom();
-      ({ loadDialogue: loadDialogue2 } = (init_dialogue(), __toCommonJS(dialogue_exports)));
+      ({ loadDialogue: loadDialogue2, loadSynopsis: loadSynopsis2, addButton: addButton3 } = (init_dialogue(), __toCommonJS(dialogue_exports)));
       ({ loadTree: loadTree2, loadHouse: loadHouse2, loadSign: loadSign2, loadScene: loadScene2 } = (init_assets(), __toCommonJS(assets_exports)));
       ({ loadPlayer: loadPlayer2, loadWizard: loadWizard2 } = (init_characters(), __toCommonJS(characters_exports)));
       __name(forestEvent, "forestEvent");
@@ -3187,7 +3252,9 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   // code/main.js
   init_kaboom();
   var { forestEvent: forestEvent2 } = (init_forest(), __toCommonJS(forest_exports));
-  to();
+  to({
+    background: [0, 0, 0]
+  });
   forestEvent2();
 })();
 //# sourceMappingURL=game.js.map
